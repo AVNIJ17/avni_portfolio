@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
     { href: "#home", label: "Home" },
@@ -18,8 +19,27 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  // Scroll progress calculation
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrolled = (scrollTop / docHeight) * 100;
+      setScrollProgress(scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-700">
+      {/* Scroll Progress Bar */}
+      <div
+        className="h-1 bg-gradient-to-r from-cyan-600 to-blue-500 origin-left"
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+      ></div>
+
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

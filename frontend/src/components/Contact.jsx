@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin } from "lucide-react";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,6 @@ const Contact = () => {
   const socialLinks = [
     { icon: <Github className="w-6 h-6" />, label: "GitHub", href: "https://github.com/AVNIJ17", color: "hover:text-gray-200" },
     { icon: <Linkedin className="w-6 h-6" />, label: "LinkedIn", href: "https://www.linkedin.com/in/avnijain17/", color: "hover:text-blue-300" },
-    // { icon: <Twitter className="w-6 h-6" />, label: "Twitter", href: "https://twitter.com", color: "hover:text-blue-200" },
   ];
 
   const handleChange = (e) => {
@@ -37,22 +37,69 @@ const Contact = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-    setSending(true);
-    // Simulate sending
-    setTimeout(() => {
-      alert("Message sent successfully!");
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const validationErrors = validate();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
+
+  //   setErrors({});
+  //   setSending(true);
+
+  //   emailjs
+  //     .send(
+  //       "YOUR_SERVICE_ID",   // replace with your EmailJS service ID
+  //       "YOUR_TEMPLATE_ID",  // replace with your EmailJS template ID
+  //       formData,
+  //       "YOUR_PUBLIC_KEY"    // replace with your EmailJS public key
+  //     )
+  //     .then(
+  //       () => {
+  //         alert("Message sent successfully!");
+  //         setFormData({ name: "", email: "", subject: "", message: "" });
+  //         setSending(false);
+  //       },
+  //       (err) => {
+  //         alert("Failed to send message. Try again later.");
+  //         console.error(err);
+  //         setSending(false);
+  //       }
+  //     );
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  if (Object.keys(validationErrors).length > 0) {
+    setErrors(validationErrors);
+    return;
+  }
+  setErrors({});
+  setSending(true);
+
+  try {
+    const response = await fetch("https://your-backend-url.onrender.com/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      alert(data.message);
       setFormData({ name: "", email: "", subject: "", message: "" });
-      setSending(false);
-    }, 1000);
-  };
+    } else {
+      alert(data.message || "Something went wrong!");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Failed to send message. Try again later.");
+  }
+
+  setSending(false);
+};
 
   return (
     <section id="contact" className="py-20 bg-gray-900">

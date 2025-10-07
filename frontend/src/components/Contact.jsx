@@ -69,7 +69,7 @@ const Contact = () => {
   //     );
   // };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
   const validationErrors = validate();
   if (Object.keys(validationErrors).length > 0) {
@@ -80,13 +80,14 @@ const Contact = () => {
   setSending(true);
 
   try {
-    const response = await fetch("https://your-backend-url.onrender.com/api/contact", {
+    const response = await fetch("https://avni-portfolio.onrender.com/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData)
     });
 
-    const data = await response.json();
+    const data = await response.json(); // <-- now response is stored
+
     if (response.ok) {
       alert(data.message);
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -100,6 +101,7 @@ const Contact = () => {
 
   setSending(false);
 };
+
 
   return (
     <section id="contact" className="py-20 bg-gray-900">

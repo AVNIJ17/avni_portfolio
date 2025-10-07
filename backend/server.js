@@ -30,17 +30,19 @@ app.post("/api/contact", async (req, res) => {
     });
 
     // Email options
-    const mailOptions = {
-      from: email,
-      to: process.env.EMAIL_USER, // your inbox
-      subject: `Portfolio Contact Form: ${subject}`,
-      html: `
-        <h3>New Message from Portfolio</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong><br/> ${message}</p>
-      `,
-    };
+   const mailOptions = {
+  from: process.env.EMAIL_USER, // your email (must be Gmail with app password)
+  to: process.env.EMAIL_USER,   // your inbox
+  replyTo: email,               // the user's email from the form
+  subject: `Portfolio Contact Form: ${subject}`,
+  html: `
+    <h3>New Message from Portfolio</h3>
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Message:</strong><br/> ${message}</p>
+  `,
+};
+
 
     await transporter.sendMail(mailOptions);
 

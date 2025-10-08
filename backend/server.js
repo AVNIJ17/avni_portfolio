@@ -8,8 +8,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors()); // Enable CORS
-app.use(express.json()); // Parse JSON requests
+app.use(cors());
+app.use(express.json());
 
 // Root route (optional)
 app.get("/", (req, res) => {
@@ -29,29 +29,20 @@ app.post("/api/contact", async (req, res) => {
     // Log what we received
     console.log("Received contact form:", { name, email, subject, message });
 
-    // Create Nodemailer transporter
+    // Create Nodemailer transporter using SendGrid
     const transporter = nodemailer.createTransport({
-      service: "gmail", // Gmail SMTP
+      service: "SendGrid",
       auth: {
-        user: process.env.EMAIL_USER, // Your Gmail email
-        pass: process.env.EMAIL_PASS, // App password
+        user: "apikey", // literally the string 'apikey'
+        pass: process.env.SENDGRID_API_KEY, // your SendGrid API key
       },
-    });
-
-    // Verify connection configuration
-    transporter.verify(function (error, success) {
-      if (error) {
-        console.error("SMTP Verification Error:", error);
-      } else {
-        console.log("SMTP Server is ready to take messages");
-      }
     });
 
     // Mail options
     const mailOptions = {
-      from: process.env.EMAIL_USER,  // Sender (your Gmail)
-      to: process.env.EMAIL_USER,    // Recipient (your Gmail)
-      replyTo: email,                // User's email from the form
+      from: "avnijain0598@gmail.com",  // must be a verified sender in SendGrid
+      to: process.env.RECEIVER_EMAIL,   // your email where messages will arrive
+      replyTo: email,                   // the user's email from the form
       subject: `Portfolio Contact Form: ${subject}`,
       html: `
         <h3>New Message from Portfolio</h3>
@@ -68,12 +59,6 @@ app.post("/api/contact", async (req, res) => {
     res.status(200).json({ message: "Message sent successfully!" });
   } catch (error) {
     console.error("Error sending email:", error);
-
-    // Detailed error message (for debugging only)
-    if (error.response) {
-      console.error("SMTP Response:", error.response);
-    }
-
     res.status(500).json({ message: "Server error. Try again later." });
   }
 });

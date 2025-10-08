@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 
 const Hero = () => {
@@ -7,39 +8,74 @@ const Hero = () => {
     if (element) element.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Motion variants
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
     <section
       id="home"
       className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 pt-16"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <motion.div
+        className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-8 py-20 text-center"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}
+      >
         {/* Profile Image */}
-        <img
+        <motion.img
           src="/profile.jpg"
           alt="Profile"
-          className="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-lg animate-bounce"
+          className="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-gray-700 shadow-lg"
           loading="eager"
+          variants={{
+            hidden: { opacity: 0, y: -50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+          }}
         />
 
         {/* Name */}
-        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
+        <motion.h1
+          className="text-5xl md:text-7xl font-bold text-white mb-6"
+          variants={fadeInUp}
+        >
           Avni <span className="text-cyan-400">Jain</span>
-        </h1>
+        </motion.h1>
 
         {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-blue-300 mb-8 font-medium">
+        <motion.p
+          className="text-xl md:text-2xl text-blue-300 mb-8 font-medium"
+          variants={fadeInUp}
+        >
           Full Stack Developer & UI/UX Designer
-        </p>
+        </motion.p>
 
         {/* Description */}
-        <p className="text-lg text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Passionate about creating beautiful, functional, and user-centered
-          digital experiences. I combine technical expertise with creative
-          design to build solutions that make a difference.
-        </p>
+        <motion.p
+          className="text-lg text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+          variants={fadeInUp}
+        >
+          Passionate about creating beautiful, functional, and user-centered digital experiences. I combine technical expertise with creative design to build solutions that make a difference.
+        </motion.p>
 
         {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+          variants={fadeInUp}
+        >
           <button
             onClick={() => scrollToSection("#projects")}
             className="bg-cyan-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-cyan-700 transition-colors duration-200 shadow-lg"
@@ -52,9 +88,8 @@ const Hero = () => {
           >
             Get In Touch
           </button>
-        </div>
-
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

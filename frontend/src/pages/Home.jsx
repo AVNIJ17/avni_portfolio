@@ -12,15 +12,14 @@ function Home() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-      <BackToTop/>
+      <Hero />
+      <About />
+      <Projects />
+      <Experience />
+      <Contact />   
+      <BackToTop />
       <Footer />
+
     </div>
   );
 }

@@ -2,41 +2,45 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 
-const Projects = () => {
 
- const projects = [
-  {
-    title: "Personal Portfolio Website",
-    description:
-      "A modern, fully responsive portfolio built with React, Tailwind CSS, and Framer Motion to showcase my skills, projects, and contact details with backend integration for contact form submission.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
-    technologies: ["React", "Tailwind CSS", "Framer Motion", "Node.js", "Express"],
-    liveUrl: "https://avni-portfolio-delta.vercel.app",
-    githubUrl: "https://github.com/AVNIJ17/avni_portfolio",
-  },
-      {
-      title: "Task Management App",
+const Projects = () => {
+  const projects = [
+    {
+      title: "Personal Portfolio Website",
       description:
-        "Collaborative task management app with real-time updates and drag-and-drop.",
-      image:
-        "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-      technologies: ["Vue.js", "Firebase", "Vuetify", "Socket.io"],
-      liveUrl: "#",
-      githubUrl: "#",
+        "A modern, fully responsive portfolio built with React, Tailwind CSS, and Framer Motion to showcase my skills, projects, and contact details with backend integration for contact form submission.",
+      image:"/portfolio.png",
+      technologies: [
+        "React",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Node.js",
+        "Express",
+      ],
+      liveUrl: "https://avni-portfolio-delta.vercel.app",
+      githubUrl: "https://github.com/AVNIJ17/avni_portfolio",
     },
     {
-      title: "Weather Dashboard",
+      title: "Real-Time Chat Application",
       description:
-        "Responsive dashboard providing forecasts and interactive maps using APIs.",
+        "A full-stack chat application with user authentication, real-time messaging, and profile management using WebSockets.",
       image:
-        "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
-      technologies: ["React", "TypeScript", "Chart.js", "OpenWeather API"],
-      liveUrl: "#",
-      githubUrl: "#",
+        "/chat.png",
+      technologies: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
+      liveUrl: "https://chat-application-1-3jj9.onrender.com/",
+      githubUrl: "https://github.com/AVNIJ17/Chat_Application",
     },
-
-];
+    {
+      title: "AI Chatbot App",
+      description:
+        "Intelligent chatbot application enabling real-time, conversational responses using AI APIs with a modern UI.",
+      image:
+        "https://images.unsplash.com/photo-1688579233246-4a5e9c63f4d8?w=600&h=400&fit=crop",
+      technologies: ["React", "Node.js", "TailwindCSS", "Gemini API"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/AVNIJ17/Bot",
+    },
+  ];
 
   return (
     <section id="projects" className="py-20 bg-gray-800">

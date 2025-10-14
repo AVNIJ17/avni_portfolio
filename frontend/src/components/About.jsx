@@ -109,7 +109,7 @@ function About() {
             // //viewport={{ once: true }}
           >
             <motion.img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop"
+              src="/about.png"
               alt="Working on projects"
               className="rounded-lg shadow-xl w-full h-96 object-cover"
               loading="lazy"
